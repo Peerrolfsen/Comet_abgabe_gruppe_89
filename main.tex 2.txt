@@ -1,0 +1,216 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{stackrel}
+\usepackage{latexsym}
+\usepackage{microtype}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{float}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+
+
+\title{Abgabe 1 für Computergestützte Methoden}
+\author{ Gruppe 89, Niklas Vogelsmeier(4360961), Jan Wernicke(4264128), Peer Rolfsen(4327708) }
+\date{2. Dezember 2024}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+
+\tableofcontents
+
+\newpage
+
+\section{Der zentrale Grenzwertsatz}
+Der zentrale Grenzwertsatz (ZGS) ist ein fundamentales Resultat der Wahrscheinlichkeitstheorie, das die Verteilung vo Summen unabhängiger, identisch verteilter ($i.i.d.$) Zufallsvariablen (ZV) beschreibt. Er besagt, dass unter bestimmten Vorraussetzungen die Summe einer großen Anzahl solcher ZV annähernd normalverteilt ist, da die Normalverteilung gut untersucht und mathematisch handhabbar ist
+
+\subsection{Aussage}
+Sei $X_1, X_2, ...X_n$ eine Folge von $i.i.d.$ ZV mit dem Erwartungswert $\mu= \mathbb{E}(X_i)$ und der Varianz $\sigma^2$ = Var$(X_i)$, wobei $ 0 < \sigma^2 < \infty$ gelte. Dann konvergiert die standardisierte Summe $Z_n$ dieser ZV für $n \to \infty$ in Verteilung gegen eine Standardnormalverteilung:\footnote[1]{Der zetrale Grenzwertsatz hat verschiedene Verallgemeinerungen. Eine davon ist der \textbf{Lindberg-Feller-Zentrale Grenzwertsatz}[S.328\cite{Klenke}], der schwächere Bedingungen an die Unabhängigkeit und die identische Verteilung der ZV stellt.}
+
+\begin{equation}
+\label{eq:Z}
+    Z_n=\frac{\sum_{i=1}^nX_i-n\mu}{\sigma\sqrt{n}}\stackrel{d}{\to} \mathcal{N}(0,1).  
+\end{equation}
+Das bedeutet, dass für große $n$ die Summe der ZV näherungsweise normalverteilt ist mit dem Erwartungswert $n\mu$ und Varianz $n\sigma^2$:
+\begin{equation}
+\label{eq:sum}
+    \sum_{i=1}^nX_i \thicksim N(n\mu,n\sigma^2).
+\end{equation}
+
+
+\subsection{Erklärung der Standardisierung}
+Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahiert man den Erwartungswert $n\mu$ und teilt durch die Standardabweichung $\sigma\sqrt{n}$. Dies führt zu der obigen Formel \eqref{eq:Z}. Die Darstellung \eqref{eq:sum} ist für $n\to\infty$ nicht wohldefiniert.
+
+\subsection{Anwendungen}
+Der ZGS wird in vielen Bereichen der Statistik und der Wahrscheinlichkeitstheorie angewendet. Typische Beispiele sind:
+\begin{itemize}
+    \item Das Glückspiel im Casino, da die Summe der Augenzahl beim würfeln mit zwei Würfeln bei vielen Versuchen annähernd normalverteilt ist
+    \item Die Körpergröße von Frauen in Deutschland, die ebenfalls annähernd normalvertelt ist
+\end{itemize}
+
+
+\newpage
+
+\section{Bearbeitung zur Aufgabe 1}
+
+\subsection{Struktur und Aufbau des Datensatzes}
+Der  vorliegende  Datensatz  erfasst  generelle  Informationen  zum  Fahrradverleih  sowie Aufzeichnungen zur Wetterlage im Zeitraum vom 1. Januar 2023 bis zum 31. Dezember 2023.
+Dabei stellt jede Zelle von A2 bis A36440 einen Datensatz dar. Die Namen für die Attribute sind in der Zelle A1 dargestellt: \newline
+group, station", "date", "day of year", "day of week", "month of year","precipitation", "windspeed", "min temperature", "average temperature", "max temperature", "count".\newline
+
+Im Rahmen dieser Analyse werden die für Gruppe 89 relevanten Daten aus dem Datensatz zum Fahrradverleih extrahiert und ausgewertet, wobei der Fokus auf der höchsten durchschnittlichen Temperatur (average temperature) liegt. Besonderes Augenmerk gilt dem Umgang mit fehlenden Werten $(NA)$, um eine präzise und belastbare Analyse zu gewährleisten. Zunächst werden alle Einträge gefiltert, die der Gruppe 89 zugeordnet sind. Hierbei wird sich ausschließlich auf die Attribute date und average temperature konzentriert, während irrelevante Daten und andere Gruppen aus dem Datensatz entfernt werden. Dies ermöglicht eine gezielte und übersichtliche Analyse der relevanten Informationen.
+Ein zentrales Problem sind Zellen mit fehlenden Werten in der Spalte average temperature, die durch den Wert NA gekennzeichnet sind. Um diese Lücken zu schließen, werden geeignete Imputationsmethoden angewandt. \newline
+Durch diese strukturierte Herangehensweise wird sichergestellt, dass die Daten für Gruppe 89 präzise analysiert werden. Die sorgfältige Aufbereitung und Berücksichtigung fehlender Werte ermöglicht eine fundierte und robuste Auswertung, die eine klare Aussage über die höchste durchschnittliche Temperatur erlaubt.
+
+\subsection{Import in eine Tabellenkalkulation}
+Die Tabellenkalkulation ist eine sehr umfangreiche Datei, in der die verschiedenen Parameter durch Kommata getrennt sind. Allerdings lagen die einzelnen Parameter nicht in einer einheitlichen Form vor. Zahlen und Zahlen sowie Buchstaben und Buchstaben waren oft nicht klar voneinander getrennt. Vereinzelt sind Buchstabenkombinationen wie „N.A.“ in Zellen enthalten, die eigentlich Zahlenwerte enthalten sollten. Nach der Interpretation in Verbindung mit der Spaltenbeschreibung deutet dies darauf hin, dass an diesen Stellen ein Messfehler bei der Temperaturmessung vorlag oder die Messung fehlerhaft war.\newline
+
+Da alle Parameter in einer Zelle zusammengefasst waren, haben wir uns überlegt, wie wir diese Daten sinnvoll aufteilen können, um die Aufgabenstellung beantworten zu können. Dafür sind wir wie folgt vorgegangen:\newpage
+\begin{itemize}
+    \item Die entsprechende Zelle mit der Maus markieren
+    \item In der Excel Menüleiste den Reiter \textbf{Daten} auswählen
+    \item Option \textbf{Text in Spalten} auswählen
+    \item Im daraufhin erscheinenden Dialogfeld die erforderlichen Trennzeichen festlegen:\\
+    -Die Option \textbf{getrennt} auswählen\\
+    -\textbf{Komma} als Trennzeichen definieren\\
+    -Zum Schluss auf \textbf{Fertig stellen} klicken
+\end{itemize}
+Nach diesem Prozess lag die Tabelle in einem übersichtlichen Spalten- und Zellenformat vor, das sich für die weitere Bearbeitung eignete.\newline
+Um den für uns relevanten Datensatz zu filtern, haben wir die \textbf{Filterfunktion} genutzt:
+\begin{itemize}
+    \item Über einen Rechtsklick auf die entsprechende Spalte haben wir den Filter aktiviert.
+    \item Da wir der Gruppe 89 zugeordnet sind, haben wir die „89“ als Filterkriterium festgelegt.
+\end{itemize}
+
+\subsection{Berechnung der höchsten mittleren Temperatur}
+Im nächsten Schritt haben wir uns auf die Aufgabenstellung konzentriert, bei der die höchste mittlere Temperatur ermittelt werden sollte. Dies haben wir wie folgt gelöst:
+\begin{itemize}
+    \item In einer leeren Zelle haben wir die Formel-Eingabe mit einem „=“-Zeichen gestartet.
+    \item Anschließend haben wir die folgende Formel eingegeben:\newline
+=MAX(WENN(ISTZAHL(J32071:J32435);J32071:J32435))
+    \item Nach der Bestätigung mit der Enter-Taste wurde das Ergebnis berechnet. Dieses stellte die höchste mittlere Temperatur dar.
+\end{itemize}
+
+Da das Ergebnis in Fahrenheit vorlag, aber die Aufgabenstellung eine Umrechnung in Grad Celsius verlangte, haben wir eine entsprechende Umrechnung vorgenommen. Hierfür haben wir die folgende Formel verwendet:
+$$Grad Celsius = (Fahrenheit - 32) * 5/9$$
+Das endgültige Ergebnis wurde anschließend im gewünschten Format ausgegeben.
+
+
+\newpage
+\subsection{Datenbank Schema entwerfen}
+
+1. Normalform = Trennung nicht-atomarer Attribute
+
+
+\begin{table}[ht]
+    \raggedright
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|c|c|c|c|c|c|c|}
+       Station  & date & precipitation & windspeed & min temperature & average temperature & max temperature & count\\
+       \hline
+        W 46 St and 11 Ave & 01.01.2023 & 0 & 10.07 & 42 & 50 & 56 & 59 \\
+    \end{tabular}}
+    \label{tab:my_label}
+\end{table}
+
+2. Normalform = Auftrennung in mehrere Tabellen +            Fremdschlüssel-Beziehungen mit passenden Abhängigkeiten
+
+\begin{table}[ht]
+    \raggedright
+    \begin{tabular}{|c|c|c|c|}
+    Tabelle Verleih \\
+    \hline
+     $\underline{rental ID}$   & station ID\# & date ID\# & count \\
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+
+\begin{table}[ht]
+    \raggedright
+    \begin{tabular}{|c|c}
+    Tabelle Station \\
+    \hline
+     $\underline{station ID}$    & station \\
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+
+\begin{table}[H]
+    \raggedright
+    \begin{tabular}{|c|c|c|c|c}
+    Tabelle Datum \\
+    \hline
+     $\underline{date ID}$ & date & day of the year & day of the week & month of the year \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \raggedright
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|c|c|c|c|c|c|c|}
+    Tabelle Wetter \\
+    \hline
+       $\underline{Weather ID}$ & date ID\# & Station ID\#  & precipitation & windspeed & min temperature & average temperature & max temperature \\
+       \hline
+    \end{tabular}}
+    \label{tab:my_label}
+\end{table}
+
+Primärschlüssel sind durch $\underline{\text{Unterstreichung}}$ gekennzeichnet.
+
+Fremdschlüssel sind durch eine \# gekennzeichnet.
+
+\subsection{SQL-Statements}
+CREATE TABLE verleih (\\
+rental ID INT PRIMARY KEY,\\
+station id INT,\\
+datum id INT,\\
+rental count INT\\
+);
+\\
+\\
+CREATE TABLE Station (\\
+station id INT PRIMARY KEY,\\
+station VARCHAR(100)\\
+);
+\newpage
+
+CREATE TABLE Datum (\\
+date id INT PRIMARY KEY,\\
+datum DATE NOT NULL\\
+day of year INT,\\
+day of week VARCHAR(20),\\
+month of year INT\\
+);
+\\
+\\
+CREATE TABLE WETTER(\\
+weather id INT PRIMARY KEY,\\
+date id INT,\\
+station id INT,\\
+precipitation FLOAT,\\
+windspeed FLOAT,\\
+min temperature FLOAT,\\
+average temperature FLOAT,\\
+max temperature FLOAT,\\
+FOREIGN KEY (date id) REFERENCES Datum(date id),\\
+FOREIGN KEY (station id) REFERENCES Station(station id)
+
+\subsection{Anmerkung}
+Der Latex Code ist bei Github unter Comet\_abgabe\_gruppe\_89 zu finden. Der Benutzername des Kontos ist "peerrolfsen".
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{References}
+
+\end{document}
